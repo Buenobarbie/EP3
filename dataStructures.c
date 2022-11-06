@@ -14,21 +14,22 @@ typedef struct cel_arvore {
   struct cel_arvore * dir;
 } node; 
 
-int comparaPalavras(char * palavra1, char * palavra2);
-node * busca_arvore (node * raiz, item x);
-node * insere (node * raiz, item x, int size);
-void inordem(node * raiz);
 
 
 //Linked list setup
 typedef struct cel{
-    node info;
+    item info;
     struct cel *prox;
 } celula;
 
-celula * insereNoFim(celula * inicio, node x);
+int comparaPalavras(char * palavra1, char * palavra2);
+node * busca_arvore (node * raiz, item x);
+node * insere (node * raiz, item x, int size);
+void inordem(node * raiz,celula * freq[100]);
+
+celula * insereNoFim(celula * inicio, item x);
 void imprimeListaRec(celula * inicio);
-void imprimePalavra(int size, char * palavra);
+void imprimePalavra(char * palavra);
 
 //Binary Search Tree functions
 
@@ -41,7 +42,11 @@ int comparaPalavras(char * palavra1, char * palavra2){
       return menor;
     i++;
   }
-  return igual;
+  if(palavra1[i] == palavra2[i])
+    return igual;
+  if(palavra1[i] == '\0')
+    return menor;
+  return maior;
 }
 
 node * busca_arvore (node * raiz, item x){
@@ -57,6 +62,7 @@ node * insere (node * raiz, item x, int size){
     raiz = malloc(sizeof (node));
     raiz->info = x;
     raiz->size = size;
+    raiz->freq = 1;
     raiz->esq = raiz->dir = NULL;
     return raiz; 
   }
@@ -69,18 +75,20 @@ node * insere (node * raiz, item x, int size){
   return raiz; 
 }
 
-void inordem(node * raiz){
+void inordem(node * raiz, celula * freq[100]){
   if (raiz != NULL){
-    inordem(raiz->esq);
-    imprimePalavra(raiz->size, raiz->info); 
-    inordem(raiz->dir);
+    inordem(raiz->esq,freq);
+    printf("%d", raiz->freq);
+    imprimePalavra(raiz->info);
+    freq[raiz->freq] = insereNoFim(freq[raiz->freq], raiz->info);
+    inordem(raiz->dir,freq);
   }
 }
 
 
 //Linked List functions
 
-celula * insereNoFim(celula * inicio, node x){
+celula * insereNoFim(celula * inicio, item x){
     celula * aux = malloc(sizeof(celula));
     aux->info = x;
     aux->prox = NULL;
@@ -95,15 +103,15 @@ celula * insereNoFim(celula * inicio, node x){
 
 void imprimeListaRec(celula * inicio){
     if(inicio != NULL){
-        imprimePalavra(inicio->info.size,inicio->info.info);
+        imprimePalavra(inicio->info);
         imprimeListaRec(inicio->prox);
     }
     else
         printf("\n");
 }
 
-void imprimePalavra(int size, char * palavra){
-    for(int i = 0; i < size; i++)
+void imprimePalavra(char * palavra){
+    for(int i = 0; palavra[i]; i++)
         printf("%c", palavra[i]);
     printf("\n");
 }
