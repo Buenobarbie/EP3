@@ -5,27 +5,27 @@
 
 int main(){
     //Armazenando as palavras e o tamanho
-    char text[100] = "Algoritmos por divisao e conquista tem passos em casa nivel da recursao";
-    char c = '0';
-    int iniPalavra = 0;
+    FILE * fptr;
+    fptr = fopen("example.txt","r");
+    char c = 'a';
     int sizePalavra = 0;
     int i = 0, j = 0;
     int k = 1;
     int maxFreq = 1;
     char *palavra;
+    char auxPalavra[100];
     node * raiz;
     node * aux;
 
-    while(c){
-        if('A'<= text[i] && text[i] <= 'Z')
-            text[i] += 32;
-        c = text[i];
-        //printf("%c", c);
+    while(c != EOF){
+        c = getc(fptr);
+        if('A'<= c && c <= 'Z')
+            c += 32;
         if(!('a' <= c && c <= 'z')){
             if(sizePalavra!= 0){
                 palavra = malloc(sizeof(char) * sizePalavra + 1);
-                for(j = 0; j < sizePalavra; j++, iniPalavra++){
-                    palavra[j] = text[iniPalavra];
+                for(j = 0; j < sizePalavra; j++){
+                    palavra[j] = auxPalavra[j];
                 }
                 palavra[j] = '\0';
                 aux = busca_arvore(raiz, palavra);
@@ -37,11 +37,10 @@ int main(){
                         maxFreq = aux->freq;
                 }
             }
-            iniPalavra = i+1;
             sizePalavra = 0;
         }
         else
-            sizePalavra++;
+            auxPalavra[sizePalavra++] = c;
         i++;
     }
     celula ** frequencias = malloc(sizeof(celula *) * (maxFreq + 1));

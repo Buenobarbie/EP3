@@ -78,7 +78,6 @@ node * insere (node * raiz, item x, int size){
 void inordem(node * raiz, celula * freq[100]){
   if (raiz != NULL){
     inordem(raiz->esq,freq);
-    printf("%d", raiz->freq);
     imprimePalavra(raiz->info);
     freq[raiz->freq] = insereNoFim(freq[raiz->freq], raiz->info);
     inordem(raiz->dir,freq);
