@@ -6,11 +6,12 @@ celula * frequencias[100];
 
 int main(){
     //Armazenando as palavras e o tamanho
-    char text[100] = "Testando Babs IHu e q quantas tem palavras tem aqui  eu sei la.";
+    char text[100] = "Algoritmos por divisao e conquista tem passos em casa nivel da recursao";
     char c = '0';
     int iniPalavra = 0;
     int sizePalavra = 0;
     int i = 0, j = 0;
+    int k = 1;
     char *palavra;
     node * raiz;
     node * aux;
@@ -42,5 +43,10 @@ int main(){
         i++;
     }
     inordem(raiz, frequencias);
-    imprimeListaRec(frequencias[2]);
+    while(k != 0){
+    printf("Frequencias :");
+    scanf("%d", &k);
+    imprimeListaRec(frequencias[k]);
+
+    }
 }

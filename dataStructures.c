@@ -116,4 +116,3 @@ void imprimePalavra(char * palavra){
     printf("\n");
 }
 
-
