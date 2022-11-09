@@ -41,7 +41,7 @@ int main(){
 
                 /*Se nao estiver , adicionar */
                 if(aux == NULL)
-                    raiz = insere(raiz, palavra, sizePalavra);
+                    raiz = insere(raiz, palavra);
 
                 /*Se estiver , incrementar sua frequencia */
                 else{
@@ -50,7 +50,6 @@ int main(){
                     /*Atualizar a frequencia maxima do texto */
                     if(aux->freq > maxFreq)
                         maxFreq = aux->freq;
-                free(palavra);
                 }
             }
             sizePalavra = 0;
@@ -72,7 +71,7 @@ int main(){
 
     while(k != 0){
     /*Recebendo o k menor  ou igual a frequencia maxima */
-    printf("Digite um k (menor  ou igual a %d):", maxFreq );
+    printf("Digite um k (menor  ou igual a %d): ", maxFreq );
     scanf("%d", &k);
 
     if(k > maxFreq)
@@ -84,6 +83,7 @@ int main(){
 
     }
 
+    free(palavra);
     for(i = 0; i < maxFreq + 1; i++){
         free(frequencias[i]);
     }

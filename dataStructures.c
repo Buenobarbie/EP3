@@ -10,7 +10,6 @@
 //Binary Search Tree structure
 typedef struct cel_arvore {
   item info; 
-  int size;
   int freq;
   struct cel_arvore * esq; 
   struct cel_arvore * dir;
@@ -25,7 +24,7 @@ typedef struct cel{
 
 int comparaPalavras(char * palavra1, char * palavra2);
 node * busca_arvore (node * raiz, item x);
-node * insere (node * raiz, item x, int size);
+node * insere (node * raiz, item x);
 void inordem(node * raiz,celula * freq[100]);
 
 celula * insereNoFim(celula * inicio, item x);
@@ -62,12 +61,11 @@ node * busca_arvore (node * raiz, item x){
   return busca_arvore (raiz->esq, x);
 }
 
-node * insere (node * raiz, item x, int size){
+node * insere (node * raiz, item x){
   //Insere , em ordem alfabetia, a palavra na arvore
   if (raiz == NULL){
     raiz = malloc(sizeof (node));
     raiz->info = x;
-    raiz->size = size;
     raiz->freq = 1;
     raiz->esq = raiz->dir = NULL;
     return raiz; 
@@ -75,13 +73,13 @@ node * insere (node * raiz, item x, int size){
   if (comparaPalavras(raiz->info, x) == igual)
     return raiz; 
   if (comparaPalavras(raiz->info, x) == menor)
-    raiz->dir = insere (raiz->dir, x, size);
+    raiz->dir = insere (raiz->dir, x);
   else 
-    raiz->esq = insere (raiz->esq, x, size);
+    raiz->esq = insere (raiz->esq, x);
   return raiz; 
 }
 
-void inordem(node * raiz, celula * freq[100]){
+void inordem(node * raiz, celula * freq[]){
   //Passa por todos os nodes da arvore em ordem alfabetica
   if (raiz != NULL){
     inordem(raiz->esq,freq);
